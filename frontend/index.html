@@ -50,22 +50,10 @@
         </label>
       </div>
 
-      <details class="info">
-        <summary>How detection works</summary>
-        <div class="info-body">
-          <p>The tool scans each page for lines starting with <code>MRP.</code> — every product card in this catalogue style ends with one. Each MRP line marks the bottom of a product; the next text block above it marks the top. The detected region is cropped from the page at the chosen render scale and laid out in a grid.</p>
-          <p>If no products are detected, your <strong>Skip pages</strong> may be too high, or the PDF doesn't follow the Noise-style "MRP." convention.</p>
-        </div>
-      </details>
-
       <button type="submit" id="submit" disabled>Generate catalogue</button>
 
       <div id="status" class="status hidden"></div>
     </form>
-
-    <footer>
-      <small>Backend: <span id="backend-url"></span></small>
-    </footer>
   </main>
 
   <script src="config.js"></script>

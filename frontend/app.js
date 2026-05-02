@@ -8,9 +8,6 @@
   const submit = document.getElementById("submit");
   const form = document.getElementById("form");
   const status = document.getElementById("status");
-  const backendUrlEl = document.getElementById("backend-url");
-
-  backendUrlEl.textContent = BACKEND_URL || "(not configured)";
 
   let currentFile = null;
 
