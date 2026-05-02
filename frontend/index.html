@@ -26,24 +26,37 @@
         <label>
           <span>Columns</span>
           <input type="number" id="cols" value="4" min="1" max="10" />
+          <small class="hint">Products per row in the output grid.</small>
         </label>
         <label>
           <span>Rows / page</span>
           <input type="number" id="rows_per_page" value="6" min="1" max="20" />
+          <small class="hint">Grid rows on each output page. More rows = fewer, taller pages.</small>
         </label>
         <label>
           <span>Render scale</span>
           <input type="number" id="scale" value="5" min="1" max="10" />
+          <small class="hint">Resolution multiplier. Higher = sharper images but larger file. Try 3 for smaller PDFs.</small>
         </label>
         <label>
           <span>Skip pages</span>
           <input type="number" id="skip_pages" value="1" min="0" max="50" />
+          <small class="hint">Pages to skip from the start of the source PDF (e.g. cover/intro). Set 0 if products begin on page 1.</small>
         </label>
         <label>
           <span>Divider px</span>
           <input type="number" id="divider" value="3" min="0" max="20" />
+          <small class="hint">Thickness of grey lines between cells. Set 0 for a borderless grid.</small>
         </label>
       </div>
+
+      <details class="info">
+        <summary>How detection works</summary>
+        <div class="info-body">
+          <p>The tool scans each page for lines starting with <code>MRP.</code> — every product card in this catalogue style ends with one. Each MRP line marks the bottom of a product; the next text block above it marks the top. The detected region is cropped from the page at the chosen render scale and laid out in a grid.</p>
+          <p>If no products are detected, your <strong>Skip pages</strong> may be too high, or the PDF doesn't follow the Noise-style "MRP." convention.</p>
+        </div>
+      </details>
 
       <button type="submit" id="submit" disabled>Generate catalogue</button>
 

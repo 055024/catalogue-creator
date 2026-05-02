@@ -82,8 +82,8 @@ header .sub {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
 }
 
 .grid label {
@@ -92,6 +92,11 @@ header .sub {
   gap: 6px;
   font-size: 13px;
   color: var(--muted);
+}
+
+.grid label > span:first-child {
+  color: var(--text);
+  font-weight: 500;
 }
 
 .grid input {
@@ -108,6 +113,60 @@ header .sub {
 .grid input:focus {
   border-color: var(--accent);
 }
+
+.hint {
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.info {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.info summary {
+  cursor: pointer;
+  padding: 12px 14px;
+  color: var(--accent);
+  font-weight: 500;
+  user-select: none;
+  list-style: none;
+}
+
+.info summary::-webkit-details-marker { display: none; }
+
+.info summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 8px;
+  transition: transform .15s;
+}
+
+.info[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.info-body {
+  padding: 0 14px 14px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.info-body p { margin: 0 0 8px; }
+.info-body p:last-child { margin-bottom: 0; }
+.info-body code {
+  background: rgba(106,166,255,.12);
+  color: var(--accent);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.info-body strong { color: var(--text); }
 
 button {
   background: var(--accent);
