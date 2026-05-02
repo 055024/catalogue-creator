@@ -17,8 +17,16 @@
       <label class="drop" id="drop">
         <input type="file" id="file" accept="application/pdf" hidden />
         <div class="drop-inner">
-          <strong id="drop-title">Drop a PDF here</strong>
+          <strong id="drop-title">Drop catalogue PDF here</strong>
           <span id="drop-sub">or click to choose a file</span>
+        </div>
+      </label>
+
+      <label class="drop drop-secondary" id="drop-price">
+        <input type="file" id="price-file" accept=".xlsx,.xls" hidden />
+        <div class="drop-inner">
+          <strong id="drop-price-title">Drop dealer price list (optional)</strong>
+          <span id="drop-price-sub">.xlsx — adds DP. ₹X under each MRP and lists missing models</span>
         </div>
       </label>
 
@@ -47,6 +55,11 @@
           <span>Divider px</span>
           <input type="number" id="divider" value="3" min="0" max="20" />
           <small class="hint">Thickness of grey lines between cells. Set 0 for a borderless grid.</small>
+        </label>
+        <label>
+          <span>Match threshold</span>
+          <input type="number" id="match_threshold" value="75" min="50" max="100" />
+          <small class="hint">Fuzzy match strictness (50-100). Higher = fewer false matches but more unmatched. 75 is a safe default.</small>
         </label>
       </div>
 

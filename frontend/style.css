@@ -65,6 +65,15 @@ header .sub {
   background: #1c222d;
 }
 
+.drop-secondary {
+  padding: 22px 16px;
+}
+
+.drop-secondary .drop-inner strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .drop-inner {
   display: flex;
   flex-direction: column;
@@ -158,4 +167,6 @@ button:disabled {
 .status.error { color: var(--error); border-color: rgba(255,107,107,.4); }
 .status.ok { color: var(--ok); border-color: rgba(93,211,158,.4); }
 .status.loading { color: var(--accent); }
+.status .stat-ok { color: var(--ok); }
+.status .stat-warn { color: #f5b75c; }
 .hidden { display: none; }
