@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catalogue Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Catalogue Generator</h1>
+      <p class="sub">Turn a product PDF into a clean grid catalogue.</p>
+    </header>
+
+    <form id="form" class="card">
+      <label class="drop" id="drop">
+        <input type="file" id="file" accept="application/pdf" hidden />
+        <div class="drop-inner">
+          <strong id="drop-title">Drop a PDF here</strong>
+          <span id="drop-sub">or click to choose a file</span>
+        </div>
+      </label>
+
+      <div class="grid">
+        <label>
+          <span>Columns</span>
+          <input type="number" id="cols" value="4" min="1" max="10" />
+        </label>
+        <label>
+          <span>Rows / page</span>
+          <input type="number" id="rows_per_page" value="6" min="1" max="20" />
+        </label>
+        <label>
+          <span>Render scale</span>
+          <input type="number" id="scale" value="5" min="1" max="10" />
+        </label>
+        <label>
+          <span>Skip pages</span>
+          <input type="number" id="skip_pages" value="1" min="0" max="50" />
+        </label>
+        <label>
+          <span>Divider px</span>
+          <input type="number" id="divider" value="3" min="0" max="20" />
+        </label>
+      </div>
+
+      <button type="submit" id="submit" disabled>Generate catalogue</button>
+
+      <div id="status" class="status hidden"></div>
+    </form>
+
+    <footer>
+      <small>Backend: <span id="backend-url"></span></small>
+    </footer>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
