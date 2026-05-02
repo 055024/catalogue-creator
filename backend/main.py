@@ -52,6 +52,10 @@ async def generate(
     if not file.filename.lower().endswith(".pdf"):
         raise HTTPException(400, "Upload a PDF file.")
 
+    # Cap render scale: scale=8 on a 90-product PDF can OOM Render's 512 MB
+    # free tier. 6 is the safe ceiling.
+    scale = max(1, min(scale, 6))
+
     pdf_bytes = await file.read()
     if not pdf_bytes:
         raise HTTPException(400, "Empty PDF file.")

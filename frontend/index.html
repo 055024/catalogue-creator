@@ -43,8 +43,8 @@
         </label>
         <label>
           <span>Render scale</span>
-          <input type="number" id="scale" value="5" min="1" max="10" />
-          <small class="hint">Resolution multiplier. Higher = sharper images but larger file. Try 3 for smaller PDFs.</small>
+          <input type="number" id="scale" value="5" min="1" max="6" />
+          <small class="hint">Resolution multiplier (1-6). Higher = sharper but larger. Values above 6 are capped server-side to avoid out-of-memory crashes.</small>
         </label>
         <label>
           <span>Skip pages</span>
