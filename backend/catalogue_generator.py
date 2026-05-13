@@ -27,6 +27,12 @@ MISSING_TITLE_FONT_SIZE = 56
 MISSING_NAME_FONT_SIZE = 32
 MISSING_PRICE_FONT_SIZE = 30
 
+# For manual entries that mimic the source-PDF cell layout
+MANUAL_NAME_FONT_SIZE = 38
+MANUAL_FEATURE_FONT_SIZE = 22
+MANUAL_MRP_FONT_SIZE = 30
+MANUAL_BULLET = "•"
+
 SECTION_HEADERS = {
     "S M A R T WAT C H", "S M A R T W A T C H", "SMARTWATCH",
     "AUDIO", "HEADPHONES", "ACCESSORIES", "NECKBAND",
@@ -159,6 +165,116 @@ def _wrap_text(draw, text, font, max_width):
             line = w
     lines.append(line)
     return lines
+
+
+def build_manual_cell(name: str,
+                      image_bytes: bytes,
+                      features_raw: str,
+                      mrp: float,
+                      dealer_price: float,
+                      cell_w: int) -> Image.Image:
+    """
+    Construct a catalogue-style cell from manually-entered data:
+      name (top, bold, centered)
+      product image (centered)
+      bullet features (left-padded, one per non-empty input line)
+      MRP. ₹X (centered)
+      DP. ₹Y (red, centered, below MRP)
+    Cell width matches the catalogue cells; height grows with content.
+    """
+    name_font = _load_font(MANUAL_NAME_FONT_SIZE)
+    feat_font = _load_font(MANUAL_FEATURE_FONT_SIZE)
+    mrp_font = _load_font(MANUAL_MRP_FONT_SIZE)
+    dp_font = _load_font(DP_FONT_SIZE)
+
+    pad_x = 18
+    pad_y = 22
+    inner_w = cell_w - 2 * pad_x
+
+    tmp = Image.new("RGB", (10, 10))
+    td = ImageDraw.Draw(tmp)
+
+    # Name lines
+    name_lines = _wrap_text(td, name, name_font, inner_w) if name else []
+    name_line_h = MANUAL_NAME_FONT_SIZE + 8
+    name_block_h = len(name_lines) * name_line_h
+
+    # Image (resize to fit cell width)
+    img_block = None
+    if image_bytes:
+        try:
+            from PIL import ImageOps
+            img = Image.open(BytesIO(image_bytes))
+            img = ImageOps.exif_transpose(img).convert("RGB")
+            max_w = inner_w
+            max_h = int(cell_w * 0.95)
+            ratio = min(max_w / img.width, max_h / img.height, 1.0)
+            new_size = (max(1, int(img.width * ratio)), max(1, int(img.height * ratio)))
+            img_block = img.resize(new_size, Image.LANCZOS)
+        except Exception:
+            img_block = None
+
+    img_h = img_block.height + 14 if img_block else 0
+
+    # Features (one bullet per non-empty line in user input)
+    feature_lines = []
+    for raw_line in (features_raw or "").splitlines():
+        s = raw_line.strip().lstrip("-•·*").strip()
+        if not s:
+            continue
+        wrapped = _wrap_text(td, s, feat_font, inner_w - 18)
+        for i, w in enumerate(wrapped):
+            feature_lines.append(("bullet" if i == 0 else "cont", w))
+    feat_line_h = MANUAL_FEATURE_FONT_SIZE + 6
+    feat_block_h = len(feature_lines) * feat_line_h
+    if feature_lines:
+        feat_block_h += 6
+
+    # MRP + DP
+    mrp_text = f"MRP. ₹{int(mrp):,}" if mrp else ""
+    dp_text = f"DP. ₹{int(dealer_price):,}" if dealer_price else ""
+    price_block_h = 0
+    if mrp_text:
+        price_block_h += MANUAL_MRP_FONT_SIZE + 10
+    if dp_text:
+        price_block_h += DP_FONT_SIZE + 12
+
+    total_h = pad_y + name_block_h + img_h + feat_block_h + 8 + price_block_h + pad_y
+
+    cell = Image.new("RGB", (cell_w, total_h), (255, 255, 255))
+    d = ImageDraw.Draw(cell)
+    y = pad_y
+
+    for ln in name_lines:
+        tw = d.textlength(ln, font=name_font)
+        d.text(((cell_w - tw) // 2, y), ln, fill=(20, 20, 20), font=name_font)
+        y += name_line_h
+
+    if img_block:
+        x = (cell_w - img_block.width) // 2
+        cell.paste(img_block, (x, y))
+        y += img_block.height + 14
+
+    if feature_lines:
+        y += 4
+        bullet_x = pad_x + 4
+        text_x = bullet_x + 18
+        for kind, txt in feature_lines:
+            if kind == "bullet":
+                d.text((bullet_x, y), MANUAL_BULLET, fill=(80, 80, 80), font=feat_font)
+            d.text((text_x, y), txt, fill=(40, 40, 40), font=feat_font)
+            y += feat_line_h
+        y += 4
+
+    if mrp_text:
+        tw = d.textlength(mrp_text, font=mrp_font)
+        d.text(((cell_w - tw) // 2, y), mrp_text, fill=(0, 0, 0), font=mrp_font)
+        y += MANUAL_MRP_FONT_SIZE + 10
+    if dp_text:
+        tw = d.textlength(dp_text, font=dp_font)
+        d.text(((cell_w - tw) // 2, y), dp_text, fill=DP_COLOR, font=dp_font)
+
+    return cell
 
 
 def build_missing_models_cells(missing_items: list,

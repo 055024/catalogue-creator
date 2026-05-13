@@ -63,10 +63,56 @@
         </label>
       </div>
 
+      <section id="manual-section" class="manual-section hidden">
+        <header class="manual-header">
+          <h2>Models missing from the catalogue PDF</h2>
+          <p>Optional — add image, features and MRP for each model you want laid out as a proper catalogue card. Anything you skip will still appear on the "Additional Models" page with just its name and DP.</p>
+          <div class="manual-toolbar">
+            <button type="button" id="manual-refresh" class="btn-link">Re-detect</button>
+            <span id="manual-summary" class="manual-summary"></span>
+          </div>
+        </header>
+        <div id="manual-list" class="manual-list"></div>
+      </section>
+
       <button type="submit" id="submit" disabled>Generate catalogue</button>
 
       <div id="status" class="status hidden"></div>
     </form>
+
+    <template id="manual-card-tpl">
+      <div class="manual-card">
+        <header>
+          <div>
+            <strong class="manual-name"></strong>
+            <span class="manual-dp"></span>
+          </div>
+          <label class="manual-toggle">
+            <input type="checkbox" class="manual-enabled" />
+            <span>Include as a full card</span>
+          </label>
+        </header>
+        <div class="manual-fields">
+          <label class="manual-image">
+            <input type="file" accept="image/*" class="manual-image-input" hidden />
+            <div class="manual-image-inner">
+              <strong>Drop image</strong>
+              <span>or click</span>
+            </div>
+          </label>
+          <div class="manual-text">
+            <label>
+              <span>Features (one per line)</span>
+              <textarea class="manual-features" rows="5" placeholder="1.85&quot; HD display&#10;BT calling&#10;100+ watch faces"></textarea>
+            </label>
+            <label>
+              <span>MRP (₹)</span>
+              <input type="number" class="manual-mrp" min="0" step="1" />
+            </label>
+          </div>
+        </div>
+      </div>
+    </template>
   </main>
 
   <script src="config.js"></script>
