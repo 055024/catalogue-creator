@@ -140,7 +140,7 @@ def _composite_score(a: str, b: str) -> float:
     return max(0.0, base)
 
 
-def match_one(catalog_name, keys, key_to_idx, items, threshold=75):
+def match_one(catalog_name, keys, key_to_idx, items, threshold=100):
     """Return (matched_item, score) or (None, score)."""
     norm = normalize(catalog_name)
     if not norm or not keys:
@@ -156,7 +156,7 @@ def match_one(catalog_name, keys, key_to_idx, items, threshold=75):
     return items[key_to_idx[matched_key]], score
 
 
-def map_catalog(catalog_names, items, threshold=75):
+def map_catalog(catalog_names, items, threshold=100):
     """
     For each catalog name, return (item_or_none, score, matched_normalized_key).
     Also returns the set of price-list normalized-keys that got matched.

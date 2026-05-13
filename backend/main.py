@@ -47,7 +47,7 @@ async def generate(
     scale: int = Form(DEFAULT_SCALE),
     skip_pages: int = Form(DEFAULT_SKIP_PAGES),
     divider: int = Form(DEFAULT_DIVIDER_PX),
-    match_threshold: int = Form(72),
+    match_threshold: int = Form(100),
 ):
     if not file.filename.lower().endswith(".pdf"):
         raise HTTPException(400, "Upload a PDF file.")

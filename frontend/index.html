@@ -58,8 +58,8 @@
         </label>
         <label>
           <span>Match threshold</span>
-          <input type="number" id="match_threshold" value="75" min="50" max="100" />
-          <small class="hint">Fuzzy match strictness (50-100). Higher = fewer false matches but more unmatched. 75 is a safe default.</small>
+          <input type="number" id="match_threshold" value="100" min="50" max="100" />
+          <small class="hint">Fuzzy match strictness (50-100). 100 = only exact (after normalization). Lower for more matches with some risk of mismatch.</small>
         </label>
       </div>
 
