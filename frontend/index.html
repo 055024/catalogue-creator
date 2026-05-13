@@ -69,6 +69,7 @@
           <p>Optional — add image, features and MRP for each model you want laid out as a proper catalogue card. Anything you skip will still appear on the "Additional Models" page with just its name and DP.</p>
           <div class="manual-toolbar">
             <button type="button" id="manual-refresh" class="btn-link">Re-detect</button>
+            <button type="button" id="manual-clear-all" class="btn-link btn-link-danger">Clear all saved</button>
             <span id="manual-summary" class="manual-summary"></span>
           </div>
         </header>
@@ -83,14 +84,18 @@
     <template id="manual-card-tpl">
       <div class="manual-card">
         <header>
-          <div>
+          <div class="manual-id">
             <strong class="manual-name"></strong>
             <span class="manual-dp"></span>
+            <span class="manual-saved hidden">saved</span>
           </div>
-          <label class="manual-toggle">
-            <input type="checkbox" class="manual-enabled" />
-            <span>Include as a full card</span>
-          </label>
+          <div class="manual-actions">
+            <button type="button" class="manual-clear btn-link btn-link-danger" title="Forget saved data for this model">Clear</button>
+            <label class="manual-toggle">
+              <input type="checkbox" class="manual-enabled" />
+              <span>Include as a full card</span>
+            </label>
+          </div>
         </header>
         <div class="manual-fields">
           <label class="manual-image">

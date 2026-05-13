@@ -214,6 +214,14 @@ button:disabled {
 }
 .btn-link:hover:not(:disabled) { background: rgba(106,166,255,.08); }
 
+.btn-link-danger {
+  color: var(--error);
+  border-color: rgba(255,107,107,.3);
+}
+.btn-link-danger:hover:not(:disabled) {
+  background: rgba(255,107,107,.08);
+}
+
 .manual-summary {
   color: var(--muted);
   font-size: 13px;
@@ -247,8 +255,30 @@ button:disabled {
   margin-bottom: 12px;
 }
 
+.manual-card .manual-id { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .manual-card .manual-name { font-size: 14px; font-weight: 600; }
 .manual-card .manual-dp { color: var(--accent); font-size: 13px; }
+.manual-card .manual-saved {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ok);
+  background: rgba(93,211,158,.12);
+  border: 1px solid rgba(93,211,158,.35);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.manual-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.manual-actions .manual-clear {
+  font-size: 11px;
+  padding: 4px 8px;
+}
 
 .manual-toggle {
   display: flex;
